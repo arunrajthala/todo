@@ -1,0 +1,23 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@inertiajs/vue3": "^1.0.0",
+        "@vitejs/plugin-vue": "^5.0.0",
+        "autoprefixer": "^10.4.12",
+        "axios": "^1.7.4",
+        "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.31",
+        "sass-embedded": "^1.79.3",
+        "vite": "^5.0",
+        "vue": "^3.5.8"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.3",
+        "vue-router": "^4.4.5"
+    }
+}
