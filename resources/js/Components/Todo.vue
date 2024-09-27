@@ -37,6 +37,14 @@
             id="due_date"
         />
       </div>
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select v-model="form.status" class="form-control" id="status" required>
+          <option value="pending">Pending</option>
+          <option value="active">Active</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary">
         {{ editMode ? 'Update' : 'Create' }} Todo
       </button>
@@ -50,6 +58,7 @@
         <th scope="col">#</th>
         <th scope="col">Title</th>
         <th scope="col">Due Date</th>
+        <th scope="col">Status</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
@@ -58,8 +67,30 @@
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ todo.title }}</td>
         <td>{{ todo.due_date || 'No due date' }}</td>
+        <td>{{ todo.status }}</td>
         <td>
           <button @click="edit(todo)" class="btn btn-warning btn-sm">Edit</button>
+          <button
+              @click="updateTodoStatus(todo.id, 'active')"
+              class="btn btn-sm"
+              :class="{'btn-success': todo.status === 'active', 'btn-outline-success': todo.status !== 'active'}"
+          >
+            Active
+          </button>
+          <button
+              @click="updateTodoStatus(todo.id, 'pending')"
+              class="btn btn-sm"
+              :class="{'btn-warning': todo.status === 'pending', 'btn-outline-warning': todo.status !== 'pending'}"
+          >
+            Pending
+          </button>
+          <button
+              @click="updateTodoStatus(todo.id, 'complete')"
+              class="btn btn-sm"
+              :class="{'btn-info': todo.status === 'complete', 'btn-outline-info': todo.status !== 'complete'}"
+          >
+            Complete
+          </button>
           <button @click="deleteTodo(todo.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
         </td>
       </tr>
@@ -127,6 +158,15 @@ export default {
       this.editMode = true;
       this.editId = todo.id;
     },
+    async updateTodoStatus(id, status) {
+      try {
+        const response = await axios.put(`/api/todos/${id}/status`, { status });
+        const updatedTodo = this.todos.find(todo => todo.id === id);
+        updatedTodo.status = response.data.status;
+      } catch (error) {
+        console.error("Error updating status", error);
+      }
+    },
     async deleteTodo(id) {
       await axios.delete(`/api/todos/${id}`);
       this.todos = this.todos.filter(todo => todo.id !== id);
@@ -143,7 +183,7 @@ export default {
       this.resetForm();
     },
     scrollToTop() {
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 };

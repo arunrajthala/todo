@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::resource('todos', TasksController::class);
+Route::put('/todos/{id}/status', TasksController::class . '@updateStatus');

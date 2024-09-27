@@ -19,5 +19,6 @@ class Task extends BaseModel
         'title',
 		'due_date',
         'description',
+		'status',
     ];
 }
