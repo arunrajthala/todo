@@ -43,6 +43,7 @@ Create database matching .env parameter DB_DATABASE
 Run following scripts to setup project
 ```sh
 composer dump-autoload
+php artisan migrate
 npm install
 npm run prod
 ```
